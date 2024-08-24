@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: mini
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    env_file:
+      - path: ./.env
+        required: true
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/.config/gcloud/application_default_credentials.json
+    volumes:
+      - ${HOME}/.config/gcloud:/app/.config/gcloud
+      - ./mini:/app/mini
+      - ./data:/app/data
