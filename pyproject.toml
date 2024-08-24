@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "mini-query-api"
+version = "0.1.0"
+description = "A lightweight tool for automating data gathering from BigQuery and making it available via a RESTful API."
+authors = ["Rodrigo Coelho <rodrigo.coelho@hotmail.com.br>"]
+readme = "README.md"
+license = "MIT"
+packages = [
+    { include = "data" },
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+duckdb = "^1.0.0"
+google-cloud-bigquery = "^3.25.0"
+loguru = "^0.7.2"
+humanize = "^4.10.0"
+fastapi = {version = "^0.112.1", extras = ["standard"]}
+
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+isort = "^5.13.2"
+autoflake = "^2.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+target_version = ["py312"]
+line_length = 79
+
+[tool.isort]
+profile = "black"
+py_version = "312"
+
+[tool.autoflake]
+recursive = true
+in_place = true
+remove_unused_variables = true
+remove_all_unused_imports = true

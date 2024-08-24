@@ -1,0 +1,5 @@
+loguru~=0.7
+google-cloud-bigquery~=3.25
+humanize~=4.10
+duckdb~=1.0
+fastapi[standard]~=0.112
