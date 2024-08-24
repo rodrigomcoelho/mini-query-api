@@ -23,18 +23,23 @@ Mini Query API is a lightweight and efficient tool designed to automate the proc
 ### Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/your-repo-name.git
+    ```sh
+    git clone https://github.com/rodrigomcoelho/mini-query-api.git
     ```
 2. Navigate to the project directory:
-    ```bash
-    cd your-repo-name
+    ```sh
+    cd mini-query-api
     ```
 3. Install the necessary dependencies:
-    ```bash
+    ```sh
     poetry install
     ```
-4. Set up environment variables for Google Cloud credentials and API configurations.
+4. Rename `env.example` to `.env` and set up environment variables for Google Cloud credentials and API configurations.
+
+5. Execute in development mode:
+    ```sh
+    poetry run python fastapi dev mini/app.py
+    ```
 
 ### Usage
 
@@ -71,7 +76,7 @@ To fetch specific records from an entity, use the `/entities/{entity_id}/records
 
 #### Registering a New Entity
 ```bash
-curl -X POST https://your-api-url/entities -H "Content-Type: application/json" -d '{
+curl -X POST https://localhost:8000/entities -H "Content-Type: application/json" -d '{
   "entityName": "example_entity",
   "query": "SELECT id, description FROM `your-project.your-dataset.your-table`",
   "indexField": "id"
