@@ -38,7 +38,7 @@ Mini Query API is a lightweight and efficient tool designed to automate the proc
 
 5. Execute in development mode:
     ```sh
-    poetry run python fastapi dev mini/app.py
+    poetry run fastapi dev mini/app.py
     ```
 
 ### Usage
