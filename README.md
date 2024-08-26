@@ -32,7 +32,7 @@ Mini Query API is a lightweight and efficient tool designed to automate the proc
     ```
 3. Install the necessary dependencies:
     ```sh
-    poetry install
+    poetry install --without dev
     ```
 4. Rename `env.example` to `.env` and set up environment variables for Google Cloud credentials and API configurations.
 
