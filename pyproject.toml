@@ -5,7 +5,9 @@ description = "A lightweight tool for automating data gathering from BigQuery an
 authors = ["Rodrigo Coelho <rodrigo.coelho@hotmail.com.br>"]
 readme = "README.md"
 license = "MIT"
-
+packages = [
+    {include = "mini"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
