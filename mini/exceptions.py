@@ -17,6 +17,17 @@ class InvalidRecordKeyError(HTTPException):
         )
 
 
+class InvalidEntityFormatError(HTTPException):
+    def __init__(
+        self, message: str, headers: dict[str, str] | None = None
+    ) -> None:
+        super().__init__(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail=str(message),
+            headers=headers,
+        )
+
+
 class NotEvenOneEntityHasBeenRegisteredExeption(HTTPException):
     def __init__(
         self, message: str, headers: dict[str, str] | None = None

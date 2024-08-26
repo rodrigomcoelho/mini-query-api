@@ -1,4 +1,10 @@
-from mini.exceptions import InvalidRecordKeyError, PageQueryError
+from re import compile
+
+from mini.exceptions import (
+    InvalidEntityFormatError,
+    InvalidRecordKeyError,
+    PageQueryError,
+)
 
 
 def parser_record_key(record_key: str) -> dict:
@@ -27,3 +33,23 @@ def parser_page_query(page: str | None) -> int:
 
     except Exception:
         raise PageQueryError("Page must be an integer")
+
+
+def validate_entity(entity: str) -> None:
+    if not isinstance(entity, str):
+        raise InvalidEntityFormatError("Entity must be a string")
+
+    if len(entity) > 50:
+        raise InvalidEntityFormatError(
+            "Entity must be less than 50 characters"
+        )
+
+    if not entity[0].isalpha():
+        raise InvalidEntityFormatError("Entity must start with an alphabet")
+
+    pattern = compile(r"^[a-zA-Z0-9_]+$")
+
+    if pattern.match(entity):
+        raise InvalidEntityFormatError(
+            "Entity must be alphanumeric and underscore only"
+        )
