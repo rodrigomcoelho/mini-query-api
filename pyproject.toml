@@ -16,7 +16,7 @@ duckdb = "^1.0.0"
 google-cloud-bigquery = "^3.25.0"
 loguru = "^0.7.2"
 humanize = "^4.10.0"
-fastapi = {version = "^0.112.1", extras = ["standard"]}
+fastapi = {version = "^0.112.2", extras = ["standard"]}
 
 
 
