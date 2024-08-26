@@ -7,5 +7,5 @@ run:
 remove:
 	podman-compose down
 	podman volume prune -f
-	podman rmi -a
+	podman image --all --force
 	podman network prune -f

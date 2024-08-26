@@ -49,7 +49,7 @@ def validate_entity(entity: str) -> None:
 
     pattern = compile(r"^[a-zA-Z0-9_]+$")
 
-    if pattern.match(entity):
+    if not pattern.match(entity):
         raise InvalidEntityFormatError(
             "Entity must be alphanumeric and underscore only"
         )
