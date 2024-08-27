@@ -12,30 +12,37 @@ app = FastAPI()
 
 
 @app.get(path="/entities/{entity_id}/definition", status_code=HTTPStatus.OK)
-async def get_entity_definition(entity_id: str = Path(default=...)):
+async def entity_definition(entity_id: str = Path(default=...)):
     validate_entity(entity_id)
     with DuckDB() as db:
         return {"definition": db.get_entity_definition(entity_id)}
 
 
+@app.get(path="/entities/{entity_id}/summarize", status_code=HTTPStatus.OK)
+async def summarize_entity(entity_id: str = Path(default=...)):
+    validate_entity(entity_id)
+    with DuckDB() as db:
+        return {"summary": db.summarize_entity(entity_id)}
+
+
 @app.get(
-    path="/entities/{entity_id}/records/{record_id}", status_code=HTTPStatus.OK
+    path="/entities/{entity_id}/records/field/{record_key}/value/{record_id}", status_code=HTTPStatus.OK
 )
-async def get_table(
+async def fetch_one_entity_record_by_key(
     entity_id: str = Path(default=...),
+    record_key: str = Path(default=...),
     record_id: str = Path(default=...),
 ):
     validate_entity(entity_id)
-    parsed_key = parser_record_key(record_id)
     with DuckDB() as db:
         return {
             "entity": entity_id,
-            "data": [db.fetch_one(entity_id, where=parsed_key)],
+            "data": [db.fetch_one(entity_id, key=record_key, value=record_id)],
         }
 
 
 @app.get(path="/entities/{entity_id}/records", status_code=HTTPStatus.OK)
-async def get_table(
+async def fetch_all_entity_records(
     entity_id: str = Path(default=...),
     page: int | None = None,
 ):
@@ -50,7 +57,7 @@ async def get_table(
 
 
 @app.get(path="/entities", status_code=HTTPStatus.OK)
-async def get_all_entities():
+async def fetch_all_entities():
     with DuckDB() as db:
         return {"entities": db.get_entities()}
 
@@ -74,7 +81,7 @@ async def register_new_entity(
 
 
 @app.put(path="/entities/{entity_id}", status_code=HTTPStatus.OK)
-async def register_new_entity(
+async def update_exisiting_entity(
     entity_id: str = Path(default=...),
     entity: UpdateEntityModel = Body(default_factory=UpdateEntityModel),
 ):
@@ -93,5 +100,5 @@ async def register_new_entity(
 
 
 @app.get(path="/", status_code=HTTPStatus.OK)
-async def home():
+async def health_status():
     return {"status": "healthy"}

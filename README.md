@@ -23,20 +23,27 @@ Mini Query API is a lightweight and efficient tool designed to automate the proc
 ### Installation
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/rodrigomcoelho/mini-query-api.git
     ```
+
 2. Navigate to the project directory:
+
     ```sh
     cd mini-query-api
     ```
+
 3. Install the necessary dependencies:
+
     ```sh
     poetry install --without dev
     ```
+
 4. Rename `env.example` to `.env` and set up environment variables for Google Cloud credentials and API configurations.
 
 5. Execute in development mode:
+
     ```sh
     poetry run fastapi dev mini/app.py
     ```
@@ -49,7 +56,11 @@ To register a new entity, send a `POST` request to the `/entities` endpoint with
 
 #### Retrieving Entity Definitions
 
-To get the definition of a registered entity, use the `/entities/{entity_id}` endpoint.
+To get the definition of a registered entity, use the `/entities/{entity_id}/definition` endpoint.
+
+#### Retrieving Entity Summary
+
+Computes a number of aggregates over all columns (`min`, `max`, `approxUnique`, `count`), and return these along the column name, column type, and the percentage of `NULL` values in the column `/entities/{entity_id}/summarize` endpoint.
 
 #### Listing Registered Entities
 
@@ -61,20 +72,22 @@ To fetch specific records from an entity, use the `/entities/{entity_id}/records
 
 #### Fetch One Specific Record By Key
 
-To fetch specific records from an entity, use the `/entities/{entity_id}/records/key:value` endpoint. The `key` references the field set as the index when the entity was created and the `value` is the actual content to be fetched.
+To fetch a specific record from an entity, use the `/entities/{entity_id}/records/field/{record_key}/value/{record_id}` endpoint. The `record_key` represents the field name and `record_id` represents the unique identifier of the record.
 
 ### API Endpoints
 
 - `POST /entities`: Register a new entity.
 - `GET /entities`: List all registered entities.
 - `GET /entities/{entity_id}/definition`: Get the definition of a specific entity.
+- `GET /entities/{entity_id}/summarize`: Get the summary of a specific entity.
 - `GET /entities/{entity_id}/records`: Retrieve records from a specific entity.
-- `GET /entities/{entity_id}/records/{record_id}`: Fetch a specific record by its ID.
+- `GET /entities/{entity_id}/records/field/{record_key}/value/{record_id}`: Fetch a specific record by its ID.
 - `PUT /entities/{entity_id}`: Update an existing entity.
 
 ### Examples
 
 #### Registering a New Entity
+
 ```bash
 curl -X POST https://localhost:8000/entities -H "Content-Type: application/json" -d '{
   "entityName": "example_entity",

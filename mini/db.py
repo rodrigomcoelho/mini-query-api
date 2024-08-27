@@ -141,6 +141,23 @@ class DuckDB:
 
         return entities
 
+    def summarize_entity(self, table_name: str) -> dict:
+        result: list[dict] = []
+
+        summary = self.__conn.sql(f"SUMMARIZE {table_name};")
+        columns = summary.columns
+        for rows in summary.fetchall():
+            row = {}
+            for index, key in enumerate(columns):
+                value = rows[index]
+                if value is None:
+                    continue
+                row[to_camel_case(key)] = value
+
+            result.append(row)
+
+        return result
+
     def get_entity_definition(self, table_name: str) -> dict:
         key = ColumnExpression("table_name")
         value = ConstantExpression(table_name)
@@ -178,9 +195,7 @@ class DuckDB:
         return result
 
     @howlong
-    def fetch_one(self, table_name: str, where: list[str]) -> dict:
-        key, value = where
-
+    def fetch_one(self, table_name: str, key: str, value: str) -> dict:
         key = ColumnExpression(key)
         value = ConstantExpression(value)
 
